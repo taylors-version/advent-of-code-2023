@@ -34,4 +34,10 @@ public class AppTest
     {
     	assertEquals(142, calibrator.calibrate("givenTest.txt"));
     }
+    
+    @Test
+    public void test2Example()
+    {
+    	assertEquals(281, calibrator.calibrate("secondTest.txt"));
+    }
 }
