@@ -61,6 +61,47 @@ public class Solver {
 		return result;
 	}
 	
+	public int cubeSolve(String fileName) {
+		int result = 0;
+		List<String> lines = readFile(fileName);
+		
+		
+		for(int i = 0; i<lines.size(); i++) {
+			String line = lines.get(i);
+			Matcher redMatcher = Pattern.compile(REG_EX_RED).matcher(line);
+			Matcher greenMatcher = Pattern.compile(REG_EX_GREEN).matcher(line);
+			Matcher blueMatcher = Pattern.compile(REG_EX_BLUE).matcher(line);
+			
+			int minRed = 0;
+			int minGreen = 0;
+			int minBlue = 0;
+			while(redMatcher.find()) {
+				String red = redMatcher.group();
+				int count = Integer.parseInt(red.substring(0, red.indexOf(' ')));
+				if (count > minRed) {
+					minRed = count;
+				}
+			}
+			while(greenMatcher.find()) {
+				String green = greenMatcher.group();
+				int count = Integer.parseInt(green.substring(0, green.indexOf(' ')));
+				if (count > minGreen) {
+					minGreen = count;
+				}
+			}
+			while(blueMatcher.find()) {
+				String blue = blueMatcher.group();
+				int count = Integer.parseInt(blue.substring(0, blue.indexOf(' ')));
+				if (count > minBlue) {
+					minBlue = count;
+				}
+			}
+			
+			result += minRed*minGreen*minBlue;
+		}
+		
+		return result;
+	}
 	
 	public List<String> readFile(String fileName){
 		List<String> lines = null ;
