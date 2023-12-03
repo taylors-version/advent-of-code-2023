@@ -10,13 +10,6 @@ import org.junit.Test;
 public class AppTest 
 {
 	Schematic solver = new Schematic();
-/*
-    @Test
-    public void test1line()
-    {
-    	assertEquals(1, solver.getPartNumberCount(new int[]{ 12, 13, 14 }, "1.txt"));
-    }
-    */
     
     
     @Test
@@ -24,6 +17,13 @@ public class AppTest
     {
     	assertEquals(4361, solver.getPartNumberCount( "givenTest.txt"));
     }
+    
+    @Test
+    public void testGearsExample()
+    {
+    	assertEquals(467835, solver.getGears( "givenTest.txt"));
+    }
+    
     
   
 }

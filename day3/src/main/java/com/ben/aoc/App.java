@@ -10,5 +10,6 @@ public class App
     {
         Schematic solver = new Schematic();
         System.out.println("day3 puzzle1: " + solver.getPartNumberCount( "input.txt"));
+        System.out.println("day3 puzzle2: " + solver.getGears( "input.txt"));
     }
 }
