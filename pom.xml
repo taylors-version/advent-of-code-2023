@@ -9,7 +9,7 @@
   <version>1.0</version>
   <packaging>pom</packaging>
 
-  <name>day1</name>
+  <name>Advent of Code</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -39,6 +39,7 @@
     <module>day2</module>
     <module>day3</module>
     <module>day4</module>
+    <module>day5</module>
   </modules>
   
   <build>
