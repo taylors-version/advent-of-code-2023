@@ -1,21 +1,15 @@
 package com.ben.aoc;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Solver {
 	
 	public int solve(String fileName) {
 		int result = 0;
-		List<String> lines = readFile(fileName);
+		List<String> lines = Util.readFile(getClass(), fileName);
 		
 		for(String line:lines) {
 			List<String> winningNumbers = Arrays.asList(line.substring(line.indexOf(':') + 1, line.indexOf('|')).trim().replaceAll(" +", " ").split(" "));
@@ -37,7 +31,7 @@ public class Solver {
 	
 	public int solveByRules(String fileName) {
 		int result = 0;
-		List<String> lines = readFile(fileName);
+		List<String> lines = Util.readFile(getClass(), fileName);
 		
 		Map<Integer, Integer> copiesOfCards = new HashMap<Integer, Integer>();
 		copiesOfCards.put(1, 1);
@@ -62,20 +56,4 @@ public class Solver {
 		
 		return result;
 	}
-	
-	public List<String> readFile(String fileName){
-		List<String> lines = null ;
-		try {
-		Path path = Paths.get(getClass().getClassLoader().getResource(fileName).toURI());
-
-			lines = Files.lines(path).collect(Collectors.toList());
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		}
-		return lines;
-	}
-	
-	
 }
