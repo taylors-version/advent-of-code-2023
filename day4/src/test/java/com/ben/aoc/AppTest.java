@@ -22,6 +22,12 @@ public class AppTest
     {
     	assertEquals(13, solver.solve("givenTest.txt"));
     }
+    
+    @Test
+    public void testRulesSolverExample()
+    {
+    	assertEquals(30, solver.solveByRules("givenTest.txt"));
+    }
    
 
 }
