@@ -3,9 +3,7 @@ package com.ben.aoc;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class LocationFinder {
@@ -17,12 +15,11 @@ public class LocationFinder {
 	private static String TEMP_TO_HUMID = "temperature-to-humidity map:";
 	private static String HUMID_TO_LOC = "humidity-to-location map:";
 	
-	public int findSmallestLocation(String fileName) {
-		int result = 0;
+	public long findSmallestLocation(String fileName) {
 		List<String> lines = Util.readFile(getClass(), fileName);
 		String seedList = lines.get(0);
 		List<String> seedsStrings = Arrays.asList(seedList.substring(seedList.indexOf(':') + 1).trim().replaceAll(" +", " ").split(" "));
-		List<Integer> seeds = seedsStrings.stream().map(s -> Integer.parseInt(s)).collect(Collectors.toList());
+		List<Long> seeds = seedsStrings.stream().map(s -> Long.parseLong(s)).collect(Collectors.toList());
 		
 		int seedToSoilMapStart = lines.indexOf(SEED_TO_SOIL);
 		int soilToFertMapStart = lines.indexOf(SOIL_TO_FERT);
@@ -40,63 +37,71 @@ public class LocationFinder {
 		List<Mapper> tempMappers = getMappersForStringsInList(lines, tempToHumidMapStart+1, humidToLocMapStart-2);
 		List<Mapper> humidMappers = getMappersForStringsInList(lines, humidToLocMapStart+1, lines.size()-1);
 		
-		List<Integer> locations = new ArrayList<Integer>();
+		List<Long> locations = new ArrayList<Long>();
 
-		for(Integer seed : seeds) {
-			int soil = 0;
-			int fert = 0;
-			int water = 0;
-			int light = 0;
-			int temp = 0;
-			int humid = 0;
-			int loc = 0;
-			
-			System.out.println("seed: " + seed);
-			
+		for(Long seed : seeds) {
+			long soil = 0;
+			long fert = 0;
+			long water = 0;
+			long light = 0;
+			long temp = 0;
+			long humid = 0;
+			long loc = 0;
+						
+			soil = seed;
 			for(Mapper seedMapper : seedMappers) {
-				int newSoil = seedMapper.getDestination(seed);
-				if(newSoil >= 0) {
-					soil = newSoil;
+							
+				if(seedMapper.getDestination(seed) >= 0) {
+					soil = seedMapper.getDestination(seed);
 				}
-				System.out.println("setting seed: " + seed + " to soil: " + soil);
 			}
+			fert = soil;
 			for(Mapper soilMapper : soilMappers) {
-				int newFert = soilMapper.getDestination(soil);
-				fert = newFert >= 0 ? newFert : fert; 
-				System.out.println("setting soil: " + soil + " to fert: " + fert);
+				
+				if(soilMapper.getDestination(soil) >= 0) {
+					fert = soilMapper.getDestination(soil);
+				}
 			}
+			water = fert;
 			for(Mapper fertMapper : fertMappers) {
-				int newWater = fertMapper.getDestination(fert);
-				water = newWater >= 0 ? newWater : water; 
-				System.out.println("setting fert: " + fert + " to water: " + water);
+				
+				if(fertMapper.getDestination(fert) >= 0) {
+					water = fertMapper.getDestination(fert);
+				}
 			}
+			light = water;
 			for(Mapper waterMapper : waterMappers) {
-				int newLight =  waterMapper.getDestination(water);
-				light = newLight >= 0 ? newLight : light; 
-				System.out.println("setting water: " + water + " to light: " + light);
+				
+				if(waterMapper.getDestination(water) >= 0) {
+					light = waterMapper.getDestination(water);
+				}
 			}
+			temp = light;
 			for(Mapper lightMapper : lightMappers) {
-				int newTemp = lightMapper.getDestination(light);
-				temp = newTemp >= 0 ? newTemp : temp; 
-				System.out.println("setting light: " + light + " to temp: " + temp);
+				
+				if(lightMapper.getDestination(light) >= 0) {
+					temp = lightMapper.getDestination(light);
+				}
 			}
+			humid = temp;
 			for(Mapper tempMapper : tempMappers) {
-				int newHumid = tempMapper.getDestination(temp);
-				humid = newHumid >= 0 ? newHumid : humid; 
-				System.out.println("setting temp: " + temp + " to humid: " + humid);
+				
+				if(tempMapper.getDestination(temp) >= 0) {
+					humid = tempMapper.getDestination(temp);
+				}
 			}
+			loc = humid;
 			for(Mapper humidMapper : humidMappers) {
-				int newLoc = humidMapper.getDestination(humid);
-				loc = newLoc >= 0 ? newLoc : loc; 
-				System.out.println("setting humi: " + humid + " to loc: " + loc);
+				
+				if(humidMapper.getDestination(humid) >= 0) {
+					loc = humidMapper.getDestination(humid);
+				}
 			}
 			locations.add(loc);
 		}
 		
 		Collections.sort(locations);
-		for(int loc: locations) {
-			System.out.println("location: " + loc);
-		}
+
 		return locations.get(0);
 	}
 	
@@ -105,7 +110,6 @@ public class LocationFinder {
 		List<Mapper> mappers = new ArrayList<Mapper>();
 		
 		for(int i = startRange; i<=endRange; i++) {		
-			System.out.println("Making Mapper for: " + strings.get(i));
 			String[] numbers = strings.get(i).split(" ");
 			mappers.add(new Mapper(numbers[0], numbers[1], numbers[2]));
 		}

@@ -1,9 +1,9 @@
 package com.ben.aoc;
 
 public class Mapper {
-	private int destinationStart;
-	private int sourceStart;
-	private int rangeLength;
+	private long destinationStart;
+	private long sourceStart;
+	private long rangeLength;
 	
 	public Mapper(int destinationStart, int sourceStart, int rangeLength) {
 		this.destinationStart = destinationStart;
@@ -12,34 +12,31 @@ public class Mapper {
 	}
 	
 	public Mapper(String destinationStart, String sourceStart, String rangeLength) {
-		this.destinationStart = Integer.parseInt(destinationStart);
-		this.sourceStart = Integer.parseInt(sourceStart);
-		this.rangeLength = Integer.parseInt(rangeLength);
+		this.destinationStart = Long.parseLong(destinationStart);
+		this.sourceStart = Long.parseLong(sourceStart);
+		this.rangeLength = Long.parseLong(rangeLength);
 	}
 	
-	public int getDestination(int source) {
-		System.out.println("deststart: " + destinationStart + ", sourcestart: " + sourceStart + ", range: " + rangeLength + "source: " + source);
+	public long getDestination(long source) {
 		if(source >= sourceStart && source < sourceStart + rangeLength) {
-			System.out.println("in iff block");
-			System.out.println("returning " + (destinationStart + (source - sourceStart)));
 			return destinationStart + (source - sourceStart);
 		}
 		return -1;
 	}
 	
-	public int getDestination(String source) {
-		return getDestination(Integer.parseInt(source));
+	public long getDestination(String source) {
+		return getDestination(Long.parseLong(source));
 	}
 
-	public int getDestinationStart() {
+	public long getDestinationStart() {
 		return destinationStart;
 	}
 
-	public int getSourceStart() {
+	public long getSourceStart() {
 		return sourceStart;
 	}
 
-	public int getRangeLength() {
+	public long getRangeLength() {
 		return rangeLength;
 	}
 	
