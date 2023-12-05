@@ -46,16 +46,17 @@ public class LocationFinder {
 		String seedList = lines.get(0);
 		String[] seedRanges = seedList.substring(seedList.indexOf(':') + 1).trim().replaceAll(" +", " ").split(" ");
 		long location = Long.MAX_VALUE;
-		
+		long count = 0;
 		for (int i=0; i<seedRanges.length; i+=2) {
 			System.out.println("i: " + i);
 			for (long j=0; j<Long.parseLong(seedRanges[i+1]); j++ ) {
 				long newLocation = findLocationForSeed(Long.parseLong(seedRanges[i]) + j, fileName);
 				location = Math.min(location, newLocation);
+				count ++;
 			}
 		}
 		
-
+		System.out.println("Number of seeds: " + count);
 		return location; 
 	}
 	
