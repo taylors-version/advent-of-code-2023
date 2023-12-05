@@ -8,8 +8,7 @@ public class App
 {
     public static void main( String[] args )
     {
-        Solver solver = new Solver();
-        System.out.println("day4 puzzle1: " + solver.solve("input.txt"));
-        System.out.println("day4 puzzle2: " + solver.solveByRules("input.txt"));
+        LocationFinder solver = new LocationFinder();
+        System.out.println("day5 puzzle1: " + solver.findSmallestLocation("input.txt"));
     }
 }
