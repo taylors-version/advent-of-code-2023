@@ -23,6 +23,10 @@ public class AppTest
     	assertEquals(35, solver.findSmallestLocation("givenTest.txt"));
     }
     
-
+    @Test
+    public void testStep2Example()
+    {
+    	assertEquals(46, solver.findSmallestLocation2("givenTest.txt"));
+    }
 
 }
