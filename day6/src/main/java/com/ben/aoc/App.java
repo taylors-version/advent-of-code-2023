@@ -8,8 +8,7 @@ public class App
 {
     public static void main( String[] args )
     {
-        Solver solver = new Solver();
-        System.out.println("day4 puzzle1: " + solver.solve("input.txt"));
-        System.out.println("day4 puzzle2: " + solver.solveByRules("input.txt"));
+        BoatRace solver = new BoatRace();
+        System.out.println("day6 puzzle1: " + solver.getWaysToWin("input.txt"));
     }
 }
