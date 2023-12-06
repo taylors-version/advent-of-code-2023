@@ -25,10 +25,25 @@ public class BoatRace {
 		return result;
 	}
 	
-	private int getWaysToWin(int raceTime, int raceDistance) {
+	public int getWaysToWin2(String fileName) {
+		List<String> lines = Util.readFile(getClass(), fileName);
+		String timeLine = lines.get(0);
+		String distanceLine = lines.get(1);
+		
+		String raceTimesString = timeLine.substring(timeLine.indexOf(':') + 1).trim().replaceAll(" +", "");
+		String raceDistanceString = distanceLine.substring(distanceLine.indexOf(':') + 1).trim().replaceAll(" +", "");
+		long raceTime = Long.parseLong(raceTimesString);
+		long raceDistance = Long.parseLong(raceDistanceString);
+		
+		int waysToWin = getWaysToWin(raceTime, raceDistance);
+		
+		return waysToWin;
+	}
+	
+	private int getWaysToWin(long raceTime, long raceDistance) {
 		int waysToWin = 0;
-		for (int i = 1; i< raceTime; i++) {
-			if (i*raceTime-(i*i) > raceDistance) {
+		for (long i = 1; i< raceTime; i++) {
+			if (i*raceTime-(i*i) >= raceDistance) {
 				waysToWin++;
 			}
 		}

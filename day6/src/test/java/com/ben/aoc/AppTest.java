@@ -16,5 +16,11 @@ public class AppTest
     {
     	assertEquals(288, boatRace.getWaysToWin("givenTest.txt"));
     }
+    
+    @Test
+    public void testExamplePuzzle2()
+    {
+    	assertEquals(71503, boatRace.getWaysToWin2("givenTest.txt"));
+    }
 
 }
