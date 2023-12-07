@@ -16,11 +16,11 @@ public class AppTest
     {
     	assertEquals(6440, camelCards.getWinAmount("givenTest.txt"));
     }
-    /*
+    
     @Test
-    public void testSimple()
+    public void testExampleJoker()
     {
-    	assertEquals(6440, camelCards.getWinAmount("1.txt"));
-    }*/
+    	assertEquals(5905, camelCards.getWinAmountJokers("givenTest.txt"));
+    }
 
 }
