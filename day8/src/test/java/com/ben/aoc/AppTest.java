@@ -16,6 +16,11 @@ public class AppTest
     {
     	assertEquals(6, ghostMap.navigate("givenTest.txt"));
     }
-
+    
+    @Test
+    public void testExampleGhost()
+    {
+    	assertEquals(6, ghostMap.navigateAsGhost("givenTest2.txt"));
+    }
 
 }
