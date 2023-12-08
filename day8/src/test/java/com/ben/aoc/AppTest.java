@@ -9,7 +9,7 @@ import org.junit.Test;
  */
 public class AppTest 
 {
-	ChostMap ghostMap = new ChostMap();
+	GhostMap ghostMap = new GhostMap();
 
     @Test
     public void testExample()

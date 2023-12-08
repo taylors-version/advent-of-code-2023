@@ -3,7 +3,7 @@ package com.ben.aoc;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChostMap {
+public class GhostMap {
 	
 	public long navigate(String fileName) {
 		long result = 0;
