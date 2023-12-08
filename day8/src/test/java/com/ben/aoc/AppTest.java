@@ -9,18 +9,13 @@ import org.junit.Test;
  */
 public class AppTest 
 {
-	BoatRace boatRace = new BoatRace();
+	ChostMap ghostMap = new ChostMap();
 
     @Test
     public void testExample()
     {
-    	assertEquals(288, boatRace.getWaysToWin("givenTest.txt"));
+    	assertEquals(6, ghostMap.navigate("givenTest.txt"));
     }
-    
-    @Test
-    public void testExamplePuzzle2()
-    {
-    	assertEquals(71503, boatRace.getWaysToWin2("givenTest.txt"));
-    }
+
 
 }
