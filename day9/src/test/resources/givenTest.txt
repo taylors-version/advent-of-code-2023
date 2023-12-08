@@ -1,4 +1,4 @@
-LLR
+LLRR
 
 AAA = (BBB, BBB)
 BBB = (AAA, ZZZ)
