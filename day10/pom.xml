@@ -11,8 +11,8 @@
   </parent>
 
   
-  <artifactId>day8</artifactId>
-  <name>day8</name>
+  <artifactId>day10</artifactId>
+  <name>day10</name>
 
   <dependencies>
     <dependency>
