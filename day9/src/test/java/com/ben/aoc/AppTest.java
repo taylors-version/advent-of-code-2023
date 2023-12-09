@@ -17,5 +17,11 @@ public class AppTest
     	assertEquals(114, oasis.findNextValues("givenTest.txt"));
     }
     
+    @Test
+    public void testExamplePrevious()
+    {
+    	assertEquals(2, oasis.findPreviousValues("givenTest.txt"));
+    }
+    
 
 }
