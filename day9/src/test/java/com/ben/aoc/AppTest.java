@@ -9,18 +9,13 @@ import org.junit.Test;
  */
 public class AppTest 
 {
-	GhostMap ghostMap = new GhostMap();
+	Oasis oasis = new Oasis();
 
     @Test
     public void testExample()
     {
-    	assertEquals(6, ghostMap.navigate("givenTest.txt"));
+    	assertEquals(114, oasis.findNextValues("givenTest.txt"));
     }
     
-    @Test
-    public void testExampleGhost()
-    {
-    	assertEquals(6, ghostMap.navigateAsGhost("givenTest2.txt"));
-    }
 
 }

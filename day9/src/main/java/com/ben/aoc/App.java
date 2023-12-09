@@ -8,8 +8,8 @@ public class App
 {
     public static void main( String[] args )
     {
-        GhostMap ghostMap = new GhostMap();
-        System.out.println("day8 puzzle1: " + ghostMap.navigate("input.txt"));
-        System.out.println("day8 puzzle2: " + ghostMap.navigateAsGhost("input.txt"));
+        Oasis oasis = new Oasis();
+        System.out.println("day puzzle1: " + oasis.findNextValues("input.txt"));
+        
     }
 }
