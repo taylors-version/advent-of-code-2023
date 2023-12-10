@@ -16,6 +16,21 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
+  
+  <modules>
+    <module>utilities</module>
+    <module>day1</module>
+    <module>day2</module>
+    <module>day3</module>
+    <module>day4</module>
+    <module>day5</module>
+    <module>day6</module>
+    <module>day7</module>
+    <module>day8</module>
+    <module>day9</module>
+    <module>day10</module>
+    <module>day11</module>
+  </modules>
 
   <dependencyManagement>
 	  <dependencies>
@@ -37,21 +52,6 @@
 		</dependency>
 	  </dependencies>
   </dependencyManagement>
-
-  <modules>
-    <module>utilities</module>
-    <module>day1</module>
-    <module>day2</module>
-    <module>day3</module>
-    <module>day4</module>
-    <module>day5</module>
-    <module>day6</module>
-    <module>day7</module>
-    <module>day8</module>
-    <module>day9</module>
-    <module>day10</module>
-    <module>day11</module>
-  </modules>
   
   <build>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults-->
