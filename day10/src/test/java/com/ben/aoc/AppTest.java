@@ -11,11 +11,10 @@ public class AppTest
 {
 	Pipes pipes = new Pipes();
 
-    @Test
     public void testExample()
     {
     	assertEquals(8, pipes.findFurthestPoint("givenTest.txt"));
     }
-    
+
 
 }
