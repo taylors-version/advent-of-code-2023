@@ -10,8 +10,8 @@ public class Universe {
 	private char[][] universe;
 	List<Integer> rowsToDouble = new ArrayList<Integer>();
 	List<Integer> columnsToDouble = new ArrayList<Integer>();
-	List<Pair<Integer, Integer>> galaxies = new ArrayList<Pair<Integer, Integer>>();
-	List<Pair<Pair<Integer, Integer>,Pair<Integer, Integer>>> galaxyPairs = new ArrayList<Pair<Pair<Integer,Integer>,Pair<Integer, Integer>>>();
+	List<Pair<Integer, Integer>> galaxies;
+	List<Pair<Pair<Integer, Integer>,Pair<Integer, Integer>>> galaxyPairs;
 	
 		
 	public long findShortestDistances(String fileName) {
@@ -27,6 +27,7 @@ public class Universe {
 		}
 		
 		expand();
+		galaxies = new ArrayList<Pair<Integer, Integer>>();
 		
 		for(int i = 0; i<universe.length; i++) {
 			for (int j=0; j<universe[0].length; j++) {
@@ -60,6 +61,7 @@ public class Universe {
 		}
 		
 		expand();
+		galaxies = new ArrayList<Pair<Integer, Integer>>();
 		
 		for(int i = 0; i<universe.length; i++) {
 			for (int j=0; j<universe[0].length; j++) {
@@ -72,7 +74,7 @@ public class Universe {
 		getPairsOfGalaxies();
 		
 		for(Pair<Pair<Integer, Integer>,Pair<Integer,Integer>> galaxyPair: galaxyPairs) {
-			long distance = getDistance(galaxyPair, 1000000);
+			long distance = getDistance(galaxyPair, 999999);
 			result += distance;		
 		}
 		
@@ -96,6 +98,7 @@ public class Universe {
 	}
 	
 	private void getPairsOfGalaxies() {
+		galaxyPairs = new ArrayList<Pair<Pair<Integer,Integer>,Pair<Integer, Integer>>>();
 
 		for (int i=0; i<galaxies.size(); i++) {
 			for(int j=i+1; j<galaxies.size(); j++) {
@@ -105,33 +108,25 @@ public class Universe {
 		}
 	}
 	
-	private long getDistance(Pair<Pair<Integer, Integer>,Pair<Integer,Integer>> galaxyPair, long expansion) {
+	private long getDistance(Pair<Pair<Integer, Integer>,Pair<Integer,Integer>> galaxyPair, int expansion) {
 		long distance = 0;
-		int rowsToExpand = 0;
-		int columnsToExpand = 0;
+		int x_min = Math.min(galaxyPair.getValue0().getValue0(), galaxyPair.getValue1().getValue0());
+		int x_max = Math.max(galaxyPair.getValue0().getValue0(), galaxyPair.getValue1().getValue0());
+		int y_min = Math.min(galaxyPair.getValue0().getValue1(), galaxyPair.getValue1().getValue1());
+		int y_max = Math.max(galaxyPair.getValue0().getValue1(), galaxyPair.getValue1().getValue1());
 		
-		int x_min = Math.min(galaxyPair.getValue0().getValue1(), galaxyPair.getValue1().getValue1());
-		int x_max = Math.max(galaxyPair.getValue0().getValue1(), galaxyPair.getValue1().getValue1());
-		int y_min = Math.min(galaxyPair.getValue0().getValue0(), galaxyPair.getValue1().getValue0());
-		int y_max = Math.max(galaxyPair.getValue0().getValue0(), galaxyPair.getValue1().getValue0());
-		
+		distance += x_max - x_min;
+		distance += y_max - y_min;
 		for(Integer i = x_min; i<x_max; i++) {
 			if (rowsToDouble.contains(i)){
-				rowsToExpand++;
+				distance+=expansion;
 			}
 		}
 		for(Integer i = y_min; i<y_max; i++) {
 			if (columnsToDouble.contains(i)){
-				columnsToExpand++;
+				distance+=expansion;
 			}
 		}
-
-		
-		
-		distance += (y_max + columnsToExpand*expansion) - y_min;
-		distance += (x_max + rowsToExpand*expansion) - x_min;
-
-
 		return distance;
 	}
 	
