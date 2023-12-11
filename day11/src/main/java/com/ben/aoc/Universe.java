@@ -39,7 +39,40 @@ public class Universe {
 		getPairsOfGalaxies();
 		
 		for(Pair<Pair<Integer, Integer>,Pair<Integer,Integer>> galaxyPair: galaxyPairs) {
-			long distance = getDistance(galaxyPair);
+			long distance = getDistance(galaxyPair, 1);
+			result += distance;		
+		}
+		
+		
+		return result;
+	}
+	
+	public long findShortestDistances2(String fileName) {
+		long result = 0;
+		List<String> lines = Util.readFile(getClass(), fileName);
+		
+		universe = new char[lines.size()][];
+		
+		for(int i = 0; i<lines.size(); i++) {
+			String line = lines.get(i);
+
+			universe[i] = line.toCharArray();
+		}
+		
+		expand();
+		
+		for(int i = 0; i<universe.length; i++) {
+			for (int j=0; j<universe[0].length; j++) {
+				if(universe[i][j] == '#') {
+					galaxies.add(new Pair<Integer, Integer>(i,j));
+				}
+			}
+		}
+		
+		getPairsOfGalaxies();
+		
+		for(Pair<Pair<Integer, Integer>,Pair<Integer,Integer>> galaxyPair: galaxyPairs) {
+			long distance = getDistance(galaxyPair, 1000000);
 			result += distance;		
 		}
 		
@@ -72,20 +105,33 @@ public class Universe {
 		}
 	}
 	
-	private long getDistance(Pair<Pair<Integer, Integer>,Pair<Integer,Integer>> galaxyPair) {
+	private long getDistance(Pair<Pair<Integer, Integer>,Pair<Integer,Integer>> galaxyPair, long expansion) {
 		long distance = 0;
-		distance += Math.abs(galaxyPair.getValue1().getValue0() - galaxyPair.getValue0().getValue0());
-		distance += Math.abs(galaxyPair.getValue1().getValue1() - galaxyPair.getValue0().getValue1());
-		for(Integer i = Math.min(galaxyPair.getValue1().getValue0(), galaxyPair.getValue0().getValue0()); i<Math.max(galaxyPair.getValue1().getValue0(), galaxyPair.getValue0().getValue0()); i++) {
+		int rowsToExpand = 0;
+		int columnsToExpand = 0;
+		
+		int x_min = Math.min(galaxyPair.getValue0().getValue1(), galaxyPair.getValue1().getValue1());
+		int x_max = Math.max(galaxyPair.getValue0().getValue1(), galaxyPair.getValue1().getValue1());
+		int y_min = Math.min(galaxyPair.getValue0().getValue0(), galaxyPair.getValue1().getValue0());
+		int y_max = Math.max(galaxyPair.getValue0().getValue0(), galaxyPair.getValue1().getValue0());
+		
+		for(Integer i = x_min; i<x_max; i++) {
 			if (rowsToDouble.contains(i)){
-				distance++;
+				rowsToExpand++;
 			}
 		}
-		for(Integer i = Math.min(galaxyPair.getValue1().getValue1(), galaxyPair.getValue0().getValue1()); i<Math.max(galaxyPair.getValue1().getValue1(), galaxyPair.getValue0().getValue1()); i++) {
+		for(Integer i = y_min; i<y_max; i++) {
 			if (columnsToDouble.contains(i)){
-				distance++;
+				columnsToExpand++;
 			}
 		}
+
+		
+		
+		distance += (y_max + columnsToExpand*expansion) - y_min;
+		distance += (x_max + rowsToExpand*expansion) - x_min;
+
+
 		return distance;
 	}
 	
