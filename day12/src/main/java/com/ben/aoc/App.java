@@ -10,6 +10,7 @@ public class App
     {
         Record record = new Record();
         System.out.println("day12 puzzle1: " + record.getPossibleArrangements("input.txt"));
+        System.out.println("day12 puzzle2: " + record.getPossibleArrangements2("input.txt"));
         
     }
 }

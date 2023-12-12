@@ -40,6 +40,48 @@ public class Record {
 		return result;
 	}
 	
+	public long getPossibleArrangements2(String fileName) {
+		long result = 0;
+		List<String> lines = Util.readFile(getClass(), fileName);
+		
+		for(String line : lines) {
+			String[] arrangement = line.split(" ");
+			String[] numbersString = arrangement[1].split(",");
+			int[] values = new int[numbersString.length * 5];
+			for(int i = 0; i< numbersString.length; i++) {
+				for(int j=0; j<5; j++) {
+					values[i+numbersString.length*j] = Integer.parseInt(numbersString[i]);
+				}
+			}
+			
+			StringBuilder sb = new StringBuilder();
+			for(int i=0; i<4; i++) {
+				sb.append(arrangement[0]).append("?");
+			}
+			sb.append(arrangement[0]);
+			arrangement[0] = sb.toString();
+			System.out.println(arrangement[0] + " " + Arrays.toString(values));
+			/*
+			List<String> combinations = getCombinations(arrangement[0]);
+			
+			for(String combination:combinations) {
+				boolean isValid = isCombinationValid(combination, values);
+				
+				if(isValid) {
+					//System.out.println(combination + " - " + Arrays.toString(values) + ": " + isValid);
+					result++;
+				}
+				
+			}
+			*/
+			/*String combination = ".#.###.#.######";
+			boolean isValid = isCombinationValid(combination, values);*/
+
+			
+		}
+		return result;
+	}
+	
 	public List<String> getCombinations(String line){
 		List<String> combinations = new ArrayList<String>();
 		List<Integer> questionIndexes = new ArrayList<Integer>();

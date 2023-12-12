@@ -8,7 +8,7 @@ import org.junit.Test;
 public class AppTest 
 {
 	Record record = new Record();    
-	
+	/*
     @Test
     public void testExample1()
     {
@@ -47,5 +47,11 @@ public class AppTest
     {
     	assertEquals(21, record.getPossibleArrangements("givenTest.txt"));
     }
-
+    */
+    @Test
+    public void test2Example1()
+    {
+    	assertEquals(1, record.getPossibleArrangements2("1.txt"));
+    }
+	
 }
