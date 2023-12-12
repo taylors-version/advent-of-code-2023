@@ -8,8 +8,8 @@ public class App
 {
     public static void main( String[] args )
     {
-        Oasis oasis = new Oasis();
-        System.out.println("day12 puzzle1: " + oasis.findNextValues("input.txt"));
+        Record record = new Record();
+        System.out.println("day12 puzzle1: " + record.getPossibleArrangements("input.txt"));
         
     }
 }
