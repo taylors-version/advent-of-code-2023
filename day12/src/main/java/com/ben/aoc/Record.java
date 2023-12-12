@@ -1,10 +1,10 @@
 package com.ben.aoc;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
-import java.util.stream.LongStream;
+
+import org.javatuples.Triplet;
 
 public class Record {
 
@@ -27,15 +27,10 @@ public class Record {
 				boolean isValid = isCombinationValid(combination, values);
 				
 				if(isValid) {
-					//System.out.println(combination + " - " + Arrays.toString(values) + ": " + isValid);
 					result++;
 				}
 				
 			}
-			/*String combination = ".#.###.#.######";
-			boolean isValid = isCombinationValid(combination, values);*/
-
-			
 		}
 		return result;
 	}
@@ -60,23 +55,10 @@ public class Record {
 			}
 			sb.append(arrangement[0]);
 			arrangement[0] = sb.toString();
-			System.out.println(arrangement[0] + " " + Arrays.toString(values));
-			/*
-			List<String> combinations = getCombinations(arrangement[0]);
 			
-			for(String combination:combinations) {
-				boolean isValid = isCombinationValid(combination, values);
-				
-				if(isValid) {
-					//System.out.println(combination + " - " + Arrays.toString(values) + ": " + isValid);
-					result++;
-				}
-				
-			}
-			*/
-			/*String combination = ".#.###.#.######";
-			boolean isValid = isCombinationValid(combination, values);*/
-
+			long combinations = getCombinationsEfficient(arrangement[0], values, new HashMap<Triplet<Integer, Integer, Integer>, Long>(), 0, 0, 0);
+			
+			result+= combinations;
 			
 		}
 		return result;
@@ -115,6 +97,35 @@ public class Record {
         
 		return combinations;
 	}
+	
+	public long getCombinationsEfficient(String line, int[] values, HashMap<Triplet<Integer, Integer, Integer>, Long> cacheMap, int lineIndex, int valueIndex, int hashes){
+		Triplet<Integer, Integer, Integer> key = new Triplet<Integer, Integer, Integer>(lineIndex, valueIndex, hashes);
+		if(cacheMap.containsKey(key)) {
+			return cacheMap.get(key);
+		}
+		
+		if(lineIndex == line.length()) {
+			return (valueIndex == values.length && hashes == 0) || (valueIndex == values.length - 1 && values[valueIndex] == hashes) ? 1 : 0;
+		}
+		
+		long count = 0;
+		char ch = line.charAt(lineIndex);
+		
+		if((ch == '.' || ch == '?') && hashes == 0) {
+			count += getCombinationsEfficient(line, values, cacheMap, lineIndex+1, valueIndex, 0);
+		}else if((ch == '.' || ch == '?') && hashes > 0 && valueIndex <values.length && values[valueIndex] == hashes) {
+			count += getCombinationsEfficient(line, values, cacheMap, lineIndex+1, valueIndex+1, 0);
+		}
+		if(ch == '#' || ch == '?'){
+			count += getCombinationsEfficient(line, values, cacheMap, lineIndex+1, valueIndex, hashes+1);
+		}
+		cacheMap.put(key, count);
+		
+		return count;
+	}
+	
+	
+	
 	
 	private boolean isCombinationValid(String combination, int[] values) {
 		//##..###  1,1,3 false
