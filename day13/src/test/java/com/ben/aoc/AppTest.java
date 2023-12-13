@@ -9,18 +9,25 @@ import org.junit.Test;
  */
 public class AppTest 
 {
-	Oasis oasis = new Oasis();
-
+	MirrorMap mirrorMap = new MirrorMap();
+	
     @Test
-    public void testExample()
+    public void testExampleHorizontal()
     {
-    	assertEquals(114, oasis.findNextValues("givenTest.txt"));
+    	assertEquals(400, mirrorMap.getReflectionSum("horizontal.txt"));
     }
     
     @Test
-    public void testExamplePrevious()
+    public void testExampleVertical()
     {
-    	assertEquals(2, oasis.findPreviousValues("givenTest.txt"));
+    	assertEquals(5, mirrorMap.getReflectionSum("vertical.txt"));
+    }
+    
+    
+    @Test
+    public void testExample()
+    {
+    	assertEquals(405, mirrorMap.getReflectionSum("givenTest.txt"));
     }
     
 

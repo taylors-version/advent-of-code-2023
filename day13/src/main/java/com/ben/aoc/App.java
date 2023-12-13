@@ -5,8 +5,8 @@ public class App
 {
     public static void main( String[] args )
     {
-        Oasis oasis = new Oasis();
-        System.out.println("day13 puzzle1: " + oasis.findNextValues("input.txt"));
+        MirrorMap mirrorMap = new MirrorMap();
+        System.out.println("day13 puzzle1: " + mirrorMap.getReflectionSum("input.txt"));
         
     }
 }
