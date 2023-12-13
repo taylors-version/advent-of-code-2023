@@ -23,4 +23,44 @@ public class Util {
 		}
 		return lines;
 	}
+	
+	public static char[][] transposeMatrix(char[][] matrix){
+		char[][] result = new char[matrix[0].length][matrix.length];
+		for(int i = 0; i<matrix.length; i++) {
+			for(int j = 0; j<matrix[0].length; j++) {
+				result[j][i] = matrix[i][j];
+			}
+		}
+		return result;
+	}
+	
+	public static int[][] transposeMatrix(int[][] matrix){
+		int[][] result = new int[matrix[0].length][matrix.length];
+		for(int i = 0; i<matrix.length; i++) {
+			for(int j = 0; j<matrix[0].length; j++) {
+				result[j][i] = matrix[i][j];
+			}
+		}
+		return result;
+	}
+	
+	public static long[][] transposeMatrix(long[][] matrix){
+		long[][] result = new long[matrix[0].length][matrix.length];
+		for(int i = 0; i<matrix.length; i++) {
+			for(int j = 0; j<matrix[0].length; j++) {
+				result[j][i] = matrix[i][j];
+			}
+		}
+		return result;
+	}
+	
+	public static Object[][] transposeMatrix(Object[][] matrix){
+		Object[][] result = new Object[matrix[0].length][matrix.length];
+		for(int i = 0; i<matrix.length; i++) {
+			for(int j = 0; j<matrix[0].length; j++) {
+				result[j][i] = matrix[i][j];
+			}
+		}
+		return result;
+	}
 }
