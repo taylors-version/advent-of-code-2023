@@ -5,30 +5,57 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 /**
- * Unit test for simple day1.
+ * Unit test for day13.
  */
 public class AppTest 
-{
-	MirrorMap mirrorMap = new MirrorMap();
-	
+{	
     @Test
     public void testExampleHorizontal()
     {
-    	assertEquals(400, mirrorMap.getReflectionSum("horizontal.txt"));
+    	MirrorMap mirrorMap = new MirrorMap("horizontal.txt");
+    	assertEquals(400, mirrorMap.getReflectionSum());
     }
     
     @Test
     public void testExampleVertical()
     {
-    	assertEquals(5, mirrorMap.getReflectionSum("vertical.txt"));
+    	MirrorMap mirrorMap = new MirrorMap("vertical.txt");
+    	assertEquals(5, mirrorMap.getReflectionSum());
     }
     
     
     @Test
     public void testExample()
     {
-    	assertEquals(405, mirrorMap.getReflectionSum("givenTest.txt"));
+    	MirrorMap mirrorMap = new MirrorMap("givenTest.txt");
+    	assertEquals(405, mirrorMap.getReflectionSum());
+    }	
+	
+    @Test
+    public void testExampleSmudgeVertical()
+    {
+    	MirrorMap mirrorMap = new MirrorMap("vertical.txt");
+    	assertEquals(300, mirrorMap.getReflectionSmudgeSum());
     }
     
-
+    @Test
+    public void testExampleSmudgeHorizontal()
+    {
+    	MirrorMap mirrorMap = new MirrorMap("horizontal.txt");
+    	assertEquals(100, mirrorMap.getReflectionSmudgeSum());
+    }
+    
+    @Test
+    public void testExampleSmudge()
+    {
+    	MirrorMap mirrorMap = new MirrorMap("givenTest.txt");
+    	assertEquals(400, mirrorMap.getReflectionSmudgeSum());
+    }
+	
+    @Test
+    public void testExampleSmudge1()
+    {
+    	MirrorMap mirrorMap = new MirrorMap("1.txt");
+    	assertNotEquals(0, mirrorMap.getReflectionSmudgeSum());
+    }
 }
