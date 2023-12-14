@@ -1,6 +1,6 @@
 package com.ben.aoc;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
@@ -9,19 +9,19 @@ import org.junit.Test;
  */
 public class AppTest 
 {	    
-	/*
+	
     @Test
     public void testExample()
     {
     	Rocks rocks = new Rocks("givenTest.txt");
     	assertEquals(136, rocks.getNorthWeight());
     }	
-    */
+    
+	 
     @Test
     public void test2Example()
     {
     	Rocks rocks = new Rocks("givenTest.txt");
     	assertEquals(64, rocks.getNorthWeightAfterSpins());
-    }	
-    
+    } 
 }

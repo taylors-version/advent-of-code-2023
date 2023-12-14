@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -72,5 +73,60 @@ public class Util {
 			}
 		}
 		return result;
+	}
+	
+	
+	public static int[][] rotateMatrix(int[][] matrix){
+		int[][] result = new int[matrix[0].length][matrix.length];
+		for(int i = 0; i<matrix.length; i++) {
+			for(int j = 0; j<matrix[0].length; j++) {
+				result[j][(matrix.length-1) -i] = matrix[i][j];
+			}
+		}
+		return result;
+	}
+	
+	public static long[][] rotateMatrix(long[][] matrix){
+		long[][] result = new long[matrix[0].length][matrix.length];
+		for(int i = 0; i<matrix.length; i++) {
+			for(int j = 0; j<matrix[0].length; j++) {
+				result[j][(matrix.length-1) -i] = matrix[i][j];
+			}
+		}
+		return result;
+	}
+	
+	public static Object[][] rotateMatrix(Object[][] matrix){
+		Object[][] result = new Object[matrix[0].length][matrix.length];
+		for(int i = 0; i<matrix.length; i++) {
+			for(int j = 0; j<matrix[0].length; j++) {
+				result[j][(matrix.length-1) -i] = matrix[i][j];
+			}
+		}
+		return result;
+	}
+	
+	public static void printMatrix(char[][] matrix) {
+		for(int i = 0; i<matrix.length; i++) {
+			System.out.println(Arrays.toString(matrix[i]));
+		}
+	}
+	
+	public static void printMatrix(int[][] matrix) {
+		for(int i = 0; i<matrix.length; i++) {
+			System.out.println(Arrays.toString(matrix[i]));
+		}
+	}
+	
+	public static void printMatrix(long[][] matrix) {
+		for(int i = 0; i<matrix.length; i++) {
+			System.out.println(Arrays.toString(matrix[i]));
+		}
+	}
+	
+	public static void printMatrix(Object[][] matrix) {
+		for(int i = 0; i<matrix.length; i++) {
+			System.out.println(Arrays.toString(matrix[i]));
+		}
 	}
 }

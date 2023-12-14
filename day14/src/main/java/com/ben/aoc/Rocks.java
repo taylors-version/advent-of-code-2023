@@ -1,11 +1,13 @@
 package com.ben.aoc;
 
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Rocks {
+	private static final long billion = 1000000000;
 	private char[][] rockPattern;
 	int zeroCounter = 0;
 	
@@ -47,50 +49,29 @@ public class Rocks {
 	
 	public long getNorthWeightAfterSpins() {
 		
-		/**
-		for (long i = 0; i<1000000000; i++) {
-			
-		}**/
+
 		char[][] newRocks = rockPattern;
 		
 		Map<String, Long> seenMaps = new HashMap<String, Long>();
-		seenMaps.put(matrixToString(newRocks), 0L);
 		boolean isRepeated = false;
 		
-		for(long i = 1; i<=1000000000; i++) {
-			if(i%10000 == 0) {
-				System.out.println(i);
-			}
+		for(long i = 0; i<billion; i++) {
 			newRocks = tiltNorth(newRocks);//N
-			newRocks = rotateMatrix(newRocks);
+			newRocks = Util.rotateMatrix(newRocks);
 			newRocks = tiltNorth(newRocks);//W
-			newRocks = rotateMatrix(newRocks);
+			newRocks = Util.rotateMatrix(newRocks);
 			newRocks = tiltNorth(newRocks);//S
-			newRocks = rotateMatrix(newRocks);
+			newRocks = Util.rotateMatrix(newRocks);
 			newRocks = tiltNorth(newRocks);//E
-			newRocks = rotateMatrix(newRocks);
-			if(!isRepeated && seenMaps.containsKey(matrixToString(newRocks))) {
+			newRocks = Util.rotateMatrix(newRocks);
+			String matrixString = matrixToString(newRocks);
+			if(!isRepeated && seenMaps.containsKey(matrixString)) {
 				isRepeated = true;
-				long repeated = seenMaps.get(matrixToString(newRocks));
-				System.out.println("Found repeat of " + repeated + " at " + i);
-				long pattern = i - repeated;
-				/*
-				long div = (1000000000 - (pattern*2))/pattern;
-				long newI = div *pattern + repeated;
-				*/
-				long newI = repeated;
-				while(newI < 1000000000 - (pattern*2)) {
-					newI+=pattern;
-				}
-				System.out.println("setting i to : " + newI);
-				i = newI;
+				long diff = i - seenMaps.get(matrixString);
+				i+= diff * ((billion-i) / diff);
 			}
 			seenMaps.put(matrixToString(newRocks), i);
 		}
-		
-		/*for(int i = 0; i<newRocks.length; i++) {
-			System.out.println(Arrays.toString(newRocks[i]));
-		}*/
 		
 		return calculateNorthLoad(newRocks);
 	}
@@ -118,20 +99,10 @@ public class Rocks {
 		return newRocks;
 	}
 	
-	private static char[][] rotateMatrix(char[][] matrix){
-		char[][] result = new char[matrix[0].length][matrix.length];
-		for(int i = 0; i<matrix.length; i++) {
-			for(int j = 0; j<matrix[0].length; j++) {
-				result[j][(matrix.length-1) -i] = matrix[i][j];
-			}
-		}
-		return result;
-	}
-	
 	private long calculateNorthLoad(char[][] rocks) {
 		long result = 0;
 		int numberOfRows = rocks.length;
-		for(int i = 1; i<numberOfRows; i++) {
+		for(int i = 0; i<numberOfRows; i++) {
 			for(int j= 0; j<rocks[0].length; j++) {
 				if(rocks[i][j] == 'O'){
 					result += numberOfRows - i;
@@ -144,10 +115,11 @@ public class Rocks {
 	
 	private String matrixToString(char[][] matrix) {
 		StringBuilder sb = new StringBuilder();
-		for(int i=0; i<matrix.length; i++) {
+		for(int i=0; i<matrix.length-1; i++) {
 			sb.append(Arrays.toString(matrix[i]));
+			sb.append(",");
 		}
+		sb.append(Arrays.toString(matrix[matrix.length - 1]));
 		return sb.toString();
 	}
-		
 }
