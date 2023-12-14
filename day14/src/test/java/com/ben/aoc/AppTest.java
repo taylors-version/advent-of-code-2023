@@ -9,11 +9,19 @@ import org.junit.Test;
  */
 public class AppTest 
 {	    
+	/*
     @Test
     public void testExample()
     {
-    	MirrorMap mirrorMap = new MirrorMap("givenTest.txt");
-    	assertEquals(405, mirrorMap.getReflectionSum());
+    	Rocks rocks = new Rocks("givenTest.txt");
+    	assertEquals(136, rocks.getNorthWeight());
+    }	
+    */
+    @Test
+    public void test2Example()
+    {
+    	Rocks rocks = new Rocks("givenTest.txt");
+    	assertEquals(64, rocks.getNorthWeightAfterSpins());
     }	
     
 }
