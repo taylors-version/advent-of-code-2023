@@ -65,6 +65,12 @@ public class Util {
 		return result;
 	}
 	
+	/**
+	 * [a,b] -> [c,a]
+	 * [c,d]    [d,b]
+	 * @param matrix
+	 * @return
+	 */
 	public static char[][] rotateMatrix(char[][] matrix){
 		char[][] result = new char[matrix[0].length][matrix.length];
 		for(int i = 0; i<matrix.length; i++) {
@@ -101,6 +107,58 @@ public class Util {
 		for(int i = 0; i<matrix.length; i++) {
 			for(int j = 0; j<matrix[0].length; j++) {
 				result[j][(matrix.length-1) -i] = matrix[i][j];
+			}
+		}
+		return result;
+	}
+	
+	/**
+	 * [a,b] -> [d,c]
+	 * [c,d]    [b,a]
+	 * @param matrix
+	 * @return
+	 */
+	public static char[][]rotateMatrixTwice(char[][] matrix){
+		char[][] result = new char[matrix.length][matrix[0].length];
+		for(int i = 0; i<matrix.length; i++) {
+			for (int j = 0; j<matrix[0].length; j++) {
+				result[(matrix.length-1) -i][(matrix[0].length-1 -j)] = matrix[i][j];
+			}
+		}
+		return result;
+	}
+	
+	/**
+	 * [a,b] -> [b,d]
+	 * [c,d]    [a,c]
+	 * @param matrix
+	 * @return
+	 */
+	public static char[][]rotateMatrixAntiClock(char[][] matrix){
+		char[][] result = new char[matrix[0].length][matrix.length];
+		for(int i = 0; i<matrix.length; i++) {
+			for (int j = 0; j<matrix[0].length; j++) {
+				result[(matrix[0].length-1) -j][i] = matrix[i][j];
+			}
+		}
+		return result;
+	}
+	
+	public static char[][]flipMatrixNS(char[][] matrix){
+		char[][] result = new char[matrix.length][matrix[0].length];
+		for(int i = 0; i<matrix.length; i++) {
+			for(int j = 0; j<matrix[0].length; j++) {
+				result[(matrix.length-1)-i][j] = matrix[i][j];
+			}
+		}
+		return result;
+	}
+	
+	public static char[][]flipMatrixEW(char[][] matrix){
+		char[][] result = new char[matrix.length][matrix[0].length];
+		for(int i = 0; i<matrix.length; i++) {
+			for(int j = 0; j<matrix[0].length; j++) {
+				result[i][(matrix[0].length-1) -j] = matrix[i][j];
 			}
 		}
 		return result;
