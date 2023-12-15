@@ -13,15 +13,8 @@ public class Box {
 	}
 	
 	public void addLens(Lens lens) {
-		if(lenses.isEmpty()) {
-			lenses.add(lens);
-			return;
-		}
-		
-		int lensPosition = lenses.indexOf(lens);
-		if(lensPosition != -1) {
-			lenses.remove(lensPosition);
-			lenses.add(lensPosition, lens);
+		if(lenses.contains(lens)) {
+			lenses.get(lenses.indexOf(lens)).setStrength(lens.getStrength());
 		}else {
 			lenses.add(lens);
 		}
