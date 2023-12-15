@@ -1,5 +1,7 @@
 package com.ben.aoc;
 
+import java.util.Objects;
+
 public class Lens {
 	
 	private String name;
@@ -21,6 +23,26 @@ public class Lens {
 			result = result % 256;
 		}
 		return result;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if(o == this) {
+			return true;
+		}
+		if(o == null) {
+			return false;
+		}
+		if(!(o instanceof Lens)) {
+			return false;
+		}
+		Lens l = (Lens) o;
+		return l.name.equals(this.name);
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(name);
 	}
 
 	public String getName() {

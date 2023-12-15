@@ -17,13 +17,8 @@ public class Box {
 			lenses.add(lens);
 			return;
 		}
-		int lensPosition = -1;
-		for(int i = 0; i<lenses.size(); i++) {
-			Lens l = lenses.get(i);
-			if(l.getName().equals(lens.getName())) {
-				lensPosition = i;
-			}
-		}
+		
+		int lensPosition = lenses.indexOf(lens);
 		if(lensPosition != -1) {
 			lenses.remove(lensPosition);
 			lenses.add(lensPosition, lens);
@@ -33,10 +28,7 @@ public class Box {
 	}
 	
 	public void removeLens(Lens lens) {
-		if(lenses.isEmpty()) {
-			return;
-		}
-		lenses.removeIf(l -> l.getName().equals(lens.getName()));
+		lenses.remove(lens);
 		
 	}
 	
