@@ -13,8 +13,15 @@ public class AppTest
     @Test
     public void testExample()
     {
-    	Rocks rocks = new Rocks("givenTest.txt");
-    	assertEquals(136, rocks.getNorthWeight());
+    	AsciiHash asciiHash = new AsciiHash("givenTest.txt");
+    	assertEquals(1320, asciiHash.getHashValue());
+    }	
+
+    @Test
+    public void testExample2()
+    {
+    	AsciiHash asciiHash = new AsciiHash("givenTest.txt");
+    	assertEquals(145, asciiHash.getFocussingPowen());
     }	
 
 }
