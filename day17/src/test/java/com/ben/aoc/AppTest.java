@@ -14,14 +14,16 @@ public class AppTest
     public void testExample()
     {
     	Day17 day17 = new Day17("givenTest.txt");
-    	assertEquals(0, day17.puzzle1());
+    	assertEquals(102, day17.puzzle1());
     }	
     
     @Test
     public void test2Example()
     {
     	Day17 day17 = new Day17("givenTest.txt");
-    	assertEquals(0, day17.puzzle2());
+    	assertEquals(94, day17.puzzle2());
     }
+    
+    
     
 }

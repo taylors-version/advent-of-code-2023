@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 public class Node {
-	private String name;
-	private List<Node> shortestPath = new LinkedList<>();
-	private Integer distance = Integer.MAX_VALUE;
+	protected String name;
+	protected List<Node> shortestPath = new LinkedList<>();
+	protected Integer distance = Integer.MAX_VALUE;
 	
 	Map<Node, Integer> adjacentNodes = new HashMap<>();
 	
