@@ -2,8 +2,6 @@ package com.ben.aoc;
 
 import java.util.List;
 
-import org.javatuples.Pair;
-
 import com.ben.aoc.dijkstra.Dijkstra;
 
 public class Day17 {
