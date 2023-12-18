@@ -4,17 +4,15 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-import org.javatuples.Pair;
-
 import com.ben.aoc.dijkstra.State;
 
 public class UltraCrucible extends State {
-	final Pair<Integer, Integer> location;
+	final IntPoint location;
 	final int cost;
-	final Pair<Integer, Integer> direction;
+	final Direction direction;
 	final int directionMoves;
 	
-	public UltraCrucible(Pair<Integer, Integer> location, int cost, Pair<Integer, Integer> direction, int directionMoves) {
+	public UltraCrucible(IntPoint location, int cost, Direction direction, int directionMoves) {
 		this.location = location;
 		this.cost = cost;
 		this.direction = direction;
@@ -33,7 +31,7 @@ public class UltraCrucible extends State {
 			return nextList;
 
 		if (directionMoves <= 10) {
-			Pair<Integer, Integer> nextPoint = getNextPoint(location, direction);
+			IntPoint nextPoint = (IntPoint) location.getByDirection(direction);
 			int v = getValueP(nextPoint);
 			if (v >= 0) {
 				nextList.add(new UltraCrucible(nextPoint, v, direction, directionMoves + 1));
@@ -41,21 +39,19 @@ public class UltraCrucible extends State {
 		}
 		if(directionMoves>=4) {
 			// anticlockwise turn
-			Pair<Integer, Integer> newDirection = new Pair<Integer, Integer>(-direction.getValue1(), direction.getValue0());
-			Pair<Integer, Integer> nextPoint = getNextPoint(location, newDirection);
+			IntPoint nextPoint = (IntPoint) location.getByDirection(direction.rotateAntiClockwise());
 	
 			int v = getValueP(nextPoint);
 			if (v >= 0) {
-				nextList.add(new UltraCrucible(nextPoint, v, newDirection, 1));
+				nextList.add(new UltraCrucible(nextPoint, v, direction.rotateAntiClockwise(), 1));
 			}
 	
 			// clockwise turn
-			newDirection = new Pair<Integer, Integer>(direction.getValue1(), -direction.getValue0());
-			nextPoint = getNextPoint(location, newDirection);
+			nextPoint = (IntPoint) location.getByDirection(direction.rotateClockwise());
 	
 			v = getValueP(nextPoint);
 			if (v >= 0) {
-				nextList.add(new UltraCrucible(nextPoint, v, newDirection, 1));
+				nextList.add(new UltraCrucible(nextPoint, v, direction.rotateClockwise(), 1));
 			}
 		}
 		return nextList;
@@ -68,21 +64,16 @@ public class UltraCrucible extends State {
 
 	@Override
 	public boolean isFinished() {
-		if (directionMoves >=4 && directionMoves <= 10 && location.getValue0() == Day17.blockPattern.length - 1
-				&& location.getValue1() == Day17.blockPattern[0].length - 1) {
+		if (directionMoves >=4 && directionMoves <= 10 && location.getY() == Day17.blockPattern.length - 1
+				&& location.getX() == Day17.blockPattern[0].length - 1) {
 			return true;
 		}
 		return false;
 	}
 	
-	public Pair<Integer, Integer> getNextPoint(Pair<Integer, Integer> current, Pair<Integer, Integer> dir) {
-		return new Pair<Integer, Integer>(location.getValue0() + dir.getValue0(),
-				location.getValue1() + dir.getValue1());
-	}
-	
-	public int getValueP(Pair<Integer, Integer> p) {
-		int i = p.getValue0();
-		int j = p.getValue1();
+	public int getValueP(IntPoint p) {
+		int i = p.getY();
+		int j = p.getX();
 		if (i < 0 || i >= Day17.iLength || j < 0 || j >= Day17.jLength) {
 			return -1;
 		}
@@ -104,16 +95,7 @@ public class UltraCrucible extends State {
 			return false;
 		}
 		UltraCrucible c = (UltraCrucible)o;
-		int i = location.getValue0();
-		int j = location.getValue1();
-		int di = direction.getValue0();
-		int dj = direction.getValue1();
-		
-		int ci = c.location.getValue0();
-		int cj = c.location.getValue1();
-		int cdi = c.direction.getValue0();
-		int cdj = c.direction.getValue1();
-		if(i == ci && j == cj && di == cdi && dj == cdj && directionMoves == c.directionMoves) {
+		if(location.equals(c.location) && direction.equals(c.direction) && directionMoves == c.directionMoves) {
 			return true;
 		}
 		return false;
@@ -121,11 +103,7 @@ public class UltraCrucible extends State {
 	
 	@Override
 	public int hashCode() {
-		int i = location.getValue0();
-		int j = location.getValue1();
-		int di = direction.getValue0();
-		int dj = direction.getValue1();
-		return Objects.hash(i, j, di, dj, directionMoves);
+		return Objects.hash(location, direction, directionMoves);
 	}
 
 }

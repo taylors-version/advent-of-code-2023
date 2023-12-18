@@ -7,7 +7,10 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
+import com.ben.aoc.IntPoint;
 import com.ben.aoc.Util;
+
+import come.ben.aoc.Area.FloodFill;
 
 public class Tester 
 {
@@ -37,13 +40,43 @@ public class Tester
 			}
 		}
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        System.out.println("Before transpose: " + timestamp);
+        //System.out.println("Before transpose: " + timestamp);
 		long[][] testedMatrix = Util.transposeMatrix(longMatrix);
 		timestamp = new Timestamp(System.currentTimeMillis());
-        System.out.println("After transpose: " + timestamp);
+        //System.out.println("After transpose: " + timestamp);
 				
     	assertTrue(Arrays.deepEquals(transposed, testedMatrix));
     }
 
-
+	@Test
+	public void testPointMoving() {
+		IntPoint origin = new IntPoint(0, 0);
+		IntPoint below = new IntPoint(0,1);
+		
+		assertEquals(below, origin.below());
+		
+	}
+	
+	@Test
+	public void testFloodFill() {
+		char screen[][] = {{'1', '1', '1', '1', '1', '1', '1', '1'},
+				{'1', '1', '1', '1', '1', '1', '0', '0'},
+				{'1', '0', '0', '1', '1', '0', '1', '1'},
+				{'1', '2', '2', '2', '2', '0', '1', '0'},
+				{'1', '1', '1', '2', '2', '0', '1', '0'},
+				{'1', '1', '1', '2', '2', '2', '2', '0'},
+				{'1', '1', '1', '1', '1', '2', '1', '1'},
+				{'1', '1', '1', '1', '1', '2', '2', '1'}};
+		IntPoint point = new IntPoint(4, 4);
+		char filledScreen[][] = {{'1', '1', '1', '1', '1', '1', '1', '1'},
+				{'1', '1', '1', '1', '1', '1', '0', '0'},
+				{'1', '0', '0', '1', '1', '0', '1', '1'},
+				{'1', '3', '3', '3', '3', '0', '1', '0'},
+				{'1', '1', '1', '3', '3', '0', '1', '0'},
+				{'1', '1', '1', '3', '3', '3', '3', '0'},
+				{'1', '1', '1', '1', '1', '3', '1', '1'},
+				{'1', '1', '1', '1', '1', '3', '3', '1'}};
+		assertTrue(Arrays.deepEquals(filledScreen, FloodFill.fill(screen, point, '3')));
+	}
+	
 }

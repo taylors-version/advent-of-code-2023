@@ -25,8 +25,8 @@ public class Day17 {
 	}
 		
 	public long puzzle1() {		
-		Crucible crucibler = (Crucible) Dijkstra.calculateShortestPath(new Crucible(new Pair<Integer, Integer>(0,0), 0, new Pair<Integer, Integer>(0,1), 0));
-		Crucible crucibled = (Crucible) Dijkstra.calculateShortestPath(new Crucible(new Pair<Integer, Integer>(0,0), 0, new Pair<Integer, Integer>(1,0), 0));
+		Crucible crucibler = (Crucible) Dijkstra.calculateShortestPath(new Crucible(new IntPoint(0,0), 0, new Direction('r'), 0));
+		Crucible crucibled = (Crucible) Dijkstra.calculateShortestPath(new Crucible(new IntPoint(0,0), 0, new Direction('d'), 0));
 
 		int downValue;
 		int rightValue;
@@ -45,8 +45,8 @@ public class Day17 {
 	}
 	
 	public long puzzle2() {
-		UltraCrucible crucibler = (UltraCrucible) Dijkstra.calculateShortestPath(new UltraCrucible(new Pair<Integer, Integer>(0,0), 0, new Pair<Integer, Integer>(0,1), 0));
-		UltraCrucible crucibled = (UltraCrucible) Dijkstra.calculateShortestPath(new UltraCrucible(new Pair<Integer, Integer>(0,0), 0, new Pair<Integer, Integer>(1,0), 0));
+		UltraCrucible crucibler = (UltraCrucible) Dijkstra.calculateShortestPath(new UltraCrucible(new IntPoint(0,0), 0, new Direction('r'), 0));
+		UltraCrucible crucibled = (UltraCrucible) Dijkstra.calculateShortestPath(new UltraCrucible(new IntPoint(0,0), 0, new Direction('d'), 0));
 
 		int downValue;
 		int rightValue;

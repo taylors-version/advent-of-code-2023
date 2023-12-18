@@ -36,28 +36,28 @@ public class FloodFill {
             queue.remove();
  
             // For Upside Point
-            IntPoint upPoint = new IntPoint(x1, y1-1);
+            IntPoint upPoint = (IntPoint) coord.above();
             if (validCoord(upPoint, xMax, yMax) && !visited.contains(upPoint) && data[y1-1][x1] == preValue) {
                 queue.add(upPoint);
                 visited.add(upPoint);
             }
             
             // For Downside Point
-            IntPoint downPoint = new IntPoint(x1, y1+1);
+            IntPoint downPoint = (IntPoint) coord.below();
             if (validCoord(downPoint, xMax, yMax) && !visited.contains(downPoint) && data[y1+1][x1] == preValue) {
                 queue.add(downPoint);
                 visited.add(downPoint);
             }
             
             // For Rightside Point
-            IntPoint rightPoint = new IntPoint(x1+1, y1);
+            IntPoint rightPoint = (IntPoint) coord.right();
             if (validCoord(rightPoint, xMax, yMax) && !visited.contains(rightPoint) && data[y1][x1 + 1] == preValue) {
                 queue.add(rightPoint);
                 visited.add(rightPoint);
             }
      
             // For Leftside Point
-            IntPoint leftPoint = new IntPoint(x1-1, y1);
+            IntPoint leftPoint = (IntPoint) coord.left();
             if (validCoord(leftPoint, xMax, yMax) && !visited.contains(leftPoint) && data[y1][x1 - 1] == preValue) {
                 queue.add(leftPoint);
                 visited.add(leftPoint);

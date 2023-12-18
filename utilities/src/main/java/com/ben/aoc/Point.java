@@ -4,9 +4,14 @@ import java.util.Objects;
 
 import org.javatuples.Pair;
 
-public class Point<T extends Number> {
+public abstract class Point<T extends Number> {
 	
 	private Pair<T, T> xy;
+	
+	public abstract Point<T> above();
+	public abstract Point<T> below();
+	public abstract Point<T> right();
+	public abstract Point<T> left();
 	
 	public Point(Pair<T, T> xy) {
 		this.xy = xy;
@@ -33,6 +38,20 @@ public class Point<T extends Number> {
 		xy.setAt1(y);
 	}
 	
+	public Point<T> getByDirection(Direction direction){
+		switch(direction.getDirection()) {
+		case UP:
+			return above();
+		case RIGHT:
+			return right();
+		case DOWN:
+			return below();
+		case LEFT:
+			return left();
+		}
+		return null;
+	}
+	
 	public String toString() {
 		return "(" + xy.getValue0() + ", " + xy.getValue1() + ")";
 	}
@@ -49,7 +68,7 @@ public class Point<T extends Number> {
 			return false;
 		}
 		Point p = (Point) o;
-		if(this.getX() == p.getX() && this.getY() == p.getY()) {
+		if(this.getX().equals(p.getX()) && this.getY().equals(p.getY())) {
 			return true;
 		}
 		return false;
