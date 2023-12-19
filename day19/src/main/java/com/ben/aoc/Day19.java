@@ -1,18 +1,15 @@
 package com.ben.aoc;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 import java.util.Stack;
 
 import org.javatuples.Pair;
 
 public class Day19 {
 	List<Part> parts = new ArrayList<Part>();
-	//List<Workflow> workflows = new ArrayList<Workflow>();
 	Map<String, Workflow> workflows = new HashMap<String, Workflow>();
 	
 	public Day19(String fileNameParts, String fileNameWorkflows) {
@@ -80,32 +77,40 @@ public class Day19 {
 			}else if(w.name.equals("R")) {
 				//Dead end
 			}else {
-				for(Rule rule : w.rules) {
-					PartRange pr = partRangeForRule(rule, current.getValue1());
+				int ruleCount = w.rules.size();
+				List<PartRange> newRanges = new ArrayList<PartRange>();
+				for(int i=0; i<ruleCount+1; i++) {
+					newRanges.add(clonePartRange(current.getValue1()));
+				}
+				for(int i=0; i<ruleCount; i++) {
+					Rule rule = w.rules.get(i);
 					Workflow nextWF = workflows.get(rule.dest);
-					Pair<Workflow, PartRange> next = new Pair<Workflow, PartRange>(nextWF, pr);
+					Pair<Workflow, PartRange> next = new Pair<Workflow, PartRange>(nextWF, partRangeForRule(rule, newRanges.get(i)));
+					for(int j=i+1; j<ruleCount+1; j++) {
+						PartRange pr = newRanges.get(j);
+						newRanges.set(j, partRangeForAntiRule(rule, pr));
+					}
 					stack.add(next);
 				}
 				Workflow nextWF = workflows.get(w.elseDest);
-				Pair<Workflow, PartRange> next = new Pair<Workflow, PartRange>(nextWF, current.getValue1());
+				Pair<Workflow, PartRange> next = new Pair<Workflow, PartRange>(nextWF, newRanges.get(ruleCount));
 				stack.add(next);
 			}
 		}
 		
 		
 		for(PartRange pr : successfulRanges) {
-			System.out.println(pr);
-			int xRange = (pr.maxX + 1) - pr.minX;
-			int mRange = (pr.maxM + 1) - pr.minM;
-			int aRange = (pr.maxA + 1) - pr.minA;
-			int sRange = (pr.maxS + 1) - pr.minS;
-			
-			result += xRange*mRange*aRange*sRange;
+			long xRange = (pr.maxX + 1) - pr.minX;
+			long mRange = (pr.maxM + 1) - pr.minM;
+			long aRange = (pr.maxA + 1) - pr.minA;
+			long sRange = (pr.maxS + 1) - pr.minS;
+			long combinations = xRange*mRange*aRange*sRange;
+			result += combinations;
 		}
 		return result;
 	}
 	
-	private PartRange partRangeForRule(Rule rule, PartRange pr) {
+	private PartRange clonePartRange(PartRange pr) {
 		PartRange partRange = new PartRange();
 		partRange.minX = pr.minX;
 		partRange.minM = pr.minM;
@@ -115,6 +120,10 @@ public class Day19 {
 		partRange.maxM = pr.maxM;
 		partRange.maxA = pr.maxA;
 		partRange.maxS = pr.maxS;
+		return partRange;
+	}
+	
+	private PartRange partRangeForRule(Rule rule, PartRange partRange) {
 		switch(rule.type) {
 		case 'x':
 			if(rule.lessThan) {
@@ -145,7 +154,40 @@ public class Day19 {
 			}
 			break;
 		}
-		
+		return partRange;
+	}
+	
+	private PartRange partRangeForAntiRule(Rule rule, PartRange partRange) {
+		switch(rule.type) {
+		case 'x':
+			if(rule.lessThan) {
+				partRange.minX = rule.value;
+			}else{
+				partRange.maxX = rule.value;
+			}
+			break;
+		case 'm':
+			if(rule.lessThan) {
+				partRange.minM = rule.value;
+			}else{
+				partRange.maxM = rule.value;
+			}
+			break;
+		case 'a':
+			if(rule.lessThan) {
+				partRange.minA = rule.value;
+			}else{
+				partRange.maxA = rule.value;
+			}
+			break;
+		case 's':
+			if(rule.lessThan) {
+				partRange.minS = rule.value;
+			}else{
+				partRange.maxS = rule.value;
+			}
+			break;
+		}
 		return partRange;
 	}
 	
