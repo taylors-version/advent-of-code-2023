@@ -106,10 +106,10 @@ public class Day20 {
 		int btLoop = 0;
 		int fvLoop = 0;
 		int prLoop = 0;
-		boolean rd1 = false;
-		boolean bt1 = false;
-		boolean fv1 = false;
-		boolean pr1 = false;
+		boolean rdCounting = false;
+		boolean btCounting = false;
+		boolean fvCounting = false;
+		boolean prCounting = false;
 		boolean rd0 = false;
 		boolean bt0 = false;
 		boolean fv0 = false;
@@ -117,16 +117,16 @@ public class Day20 {
 		
 		while(doRun) {
 			
-			if(rd1) {
+			if(rdCounting) {
 				rdLoop++;
 			}
-			if(bt1) {
+			if(btCounting) {
 				btLoop++;
 			}
-			if(fv1) {
+			if(fvCounting) {
 				fvLoop++;
 			}
-			if(pr1) {
+			if(prCounting) {
 				prLoop++;
 			}
 			
@@ -139,33 +139,21 @@ public class Day20 {
 				Triplet<String, Integer, String> trip = queue.remove();
 				Module module = modules.get(trip.getValue0());
 				if(module != null) {
-					if(module.name.equals(rd) && trip.getValue1().equals(1)) {
-						if(!rd1 && rdLoop ==0) {
-							rd1 = true;
-						}else if(rd1) {
-							rd1 = false;
-						}
+					if(module.name.equals(rd)) {
+						rdCounting = amCounting(trip.getValue1(), rdLoop, rd0, rdCounting);
+						rd0 = amZeroAfterCounting(trip.getValue1(), rdLoop, rd0);
 					}
-					if(module.name.equals(bt) && trip.getValue1().equals(1)) {
-						if(!bt1 && btLoop ==0) {
-							bt1 = true;
-						}else if(bt1) {
-							bt1 = false;
-						}
+					if(module.name.equals(bt)) {
+						btCounting = amCounting(trip.getValue1(), btLoop, bt0, btCounting);
+						bt0 = amZeroAfterCounting(trip.getValue1(), btLoop, bt0);
 					}
-					if(module.name.equals(fv) && trip.getValue1().equals(1)) {
-						if(!fv1 && fvLoop ==0) {
-							fv1 = true;
-						}else if(fv1) {
-							fv1 = false;
-						}
+					if(module.name.equals(fv)) {
+						fvCounting = amCounting(trip.getValue1(), fvLoop, fv0, fvCounting);
+						fv0 = amZeroAfterCounting(trip.getValue1(), fvLoop, fv0);
 					}
-					if(module.name.equals(pr) && trip.getValue1().equals(1)) {
-						if(!pr1 && prLoop ==0) {
-							pr1 = true;
-						}else if(pr1) {
-							pr1 = false;
-						}
+					if(module.name.equals(pr)) {
+						prCounting = amCounting(trip.getValue1(), prLoop, pr0, prCounting);
+						pr0 = amZeroAfterCounting(trip.getValue1(), prLoop, pr0);
 					}
 					String[] destinations = module.destinations;
 					Integer output = module.getPulse(trip.getValue1(), trip.getValue2());
@@ -178,7 +166,7 @@ public class Day20 {
 				}
 			}
 			
-			if((rdLoop>0 && !rd1) && (btLoop>0 && !bt1) && (fvLoop>0 && !fv1) && (prLoop>0 && !pr1)) {
+			if((rdLoop>0 && !rdCounting) && (btLoop>0 && !btCounting) && (fvLoop>0 && !fvCounting) && (prLoop>0 && !prCounting)) {
 				doRun = false;
 			}
 		}
@@ -190,4 +178,24 @@ public class Day20 {
 		
 		return Maths.lcm(loops);
 	}	
+	
+	public boolean amCounting(int value, int counter, boolean zeroAfterCounting, boolean counting) {
+		if(value == 1 && counter ==0 && !zeroAfterCounting) {
+			return true;
+		}
+		if(value ==1 && counting && zeroAfterCounting) {
+			return false;
+		}		
+		return counting;
+	}
+	
+	public boolean amZeroAfterCounting(int value, int counter, boolean zeroAfterCounting) {
+		if(zeroAfterCounting) {
+			return true;
+		}
+		if(value ==0 && counter>0) {
+			return true;
+		}
+		return false;
+	}
 }
