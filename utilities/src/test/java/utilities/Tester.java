@@ -3,12 +3,15 @@ package utilities;
 import static org.junit.Assert.*;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Test;
 
 import com.ben.aoc.IntPoint;
 import com.ben.aoc.Util;
+import com.ben.aoc.maths.Maths;
 
 import come.ben.aoc.Area.FloodFill;
 
@@ -77,6 +80,17 @@ public class Tester
 				{'1', '1', '1', '1', '1', '3', '1', '1'},
 				{'1', '1', '1', '1', '1', '3', '3', '1'}};
 		assertTrue(Arrays.deepEquals(filledScreen, FloodFill.fill(screen, point, '3')));
+	}
+	
+	@Test
+	
+	public void testLCM() {
+		List<Long> numbers = new ArrayList<Long>();
+		numbers.add(3911L);
+		numbers.add(3917L);
+		numbers.add(3929L);
+		numbers.add(3793L);
+		assertEquals(228300182686739L, Maths.lcm(numbers));
 	}
 	
 }

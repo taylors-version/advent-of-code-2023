@@ -19,7 +19,7 @@ public class AppTest
     
     
     @Test
-    public void testExampl2e()
+    public void testExample2()
     {
     	Day20 day20 = new Day20("givenTest2.txt");
     	assertEquals(11687500, day20.puzzle1());

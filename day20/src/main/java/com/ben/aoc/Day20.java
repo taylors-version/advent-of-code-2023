@@ -2,6 +2,7 @@ package com.ben.aoc;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,11 +14,13 @@ import com.ben.aoc.Module.Type;
 import com.ben.aoc.maths.Maths;
 
 public class Day20 {
+	private static final String RX = "rx";
 	private static final String START = "broadcaster";
 	private static final String BUTTON = "button";
 	
 	List<String> lines;
 	Map<String, Module> modules;
+	Module rxInput = null;
 	
 	public Day20(String fileName) {
 		lines = Util.readFile(getClass(), fileName);
@@ -54,6 +57,9 @@ public class Day20 {
 				Module module = modules.get(destination);
 				if(module != null && module.type == Type.CONJUNCTION) {
 					module.addInput(m.name);
+				}
+				if(destination.equals(RX)) {
+					rxInput = m;
 				}
 			}
 		}
@@ -97,38 +103,26 @@ public class Day20 {
 	
 	public long puzzle2() {
 		boolean doRun = true;
+		String rxInputName = rxInput.name;
+		List<Module> rxInProviders = new ArrayList<Module>();
+		for(Module m : modules.values()) {
+			for(String moduleName : m.destinations) {
+				if(moduleName.equals(rxInputName)) {
+					rxInProviders.add(m);
+				}
+			}
+		}
 		
-		String rd = "rd";
-		String bt = "bt";
-		String fv = "fv";
-		String pr = "pr";
-		int rdLoop = 0;
-		int btLoop = 0;
-		int fvLoop = 0;
-		int prLoop = 0;
-		boolean rdCounting = false;
-		boolean btCounting = false;
-		boolean fvCounting = false;
-		boolean prCounting = false;
-		boolean rd0 = false;
-		boolean bt0 = false;
-		boolean fv0 = false;
-		boolean pr0 = false;
+		int[] rxInFirst1 = new int[rxInProviders.size()];
+		int[] rxInSecond1 = new int[rxInProviders.size()];
+		
+		Arrays.fill(rxInFirst1, 0);
+		Arrays.fill(rxInSecond1, 0);
+		
+		int count = 0;
 		
 		while(doRun) {
-			
-			if(rdCounting) {
-				rdLoop++;
-			}
-			if(btCounting) {
-				btLoop++;
-			}
-			if(fvCounting) {
-				fvLoop++;
-			}
-			if(prCounting) {
-				prLoop++;
-			}
+			count++;
 			
 			Queue<Triplet<String, Integer, String>> queue = new ArrayDeque<Triplet<String,Integer,String>>(); //Destination, inputstate, inputname
 			Triplet<String, Integer, String> broadcaster = new Triplet<String, Integer, String>(START, 0, BUTTON);
@@ -139,21 +133,16 @@ public class Day20 {
 				Triplet<String, Integer, String> trip = queue.remove();
 				Module module = modules.get(trip.getValue0());
 				if(module != null) {
-					if(module.name.equals(rd)) {
-						rdCounting = amCounting(trip.getValue1(), rdLoop, rd0, rdCounting);
-						rd0 = amZeroAfterCounting(trip.getValue1(), rdLoop, rd0);
-					}
-					if(module.name.equals(bt)) {
-						btCounting = amCounting(trip.getValue1(), btLoop, bt0, btCounting);
-						bt0 = amZeroAfterCounting(trip.getValue1(), btLoop, bt0);
-					}
-					if(module.name.equals(fv)) {
-						fvCounting = amCounting(trip.getValue1(), fvLoop, fv0, fvCounting);
-						fv0 = amZeroAfterCounting(trip.getValue1(), fvLoop, fv0);
-					}
-					if(module.name.equals(pr)) {
-						prCounting = amCounting(trip.getValue1(), prLoop, pr0, prCounting);
-						pr0 = amZeroAfterCounting(trip.getValue1(), prLoop, pr0);
+					for(int i=0; i<rxInProviders.size(); i++) {
+						Module rxInProvider = rxInProviders.get(i);
+						if(module.name.equals(rxInProvider.name)) {
+							int value = module.getPulse(trip.getValue1(), trip.getValue2());
+							if(value == 1 && rxInFirst1[i]==0) {
+								rxInFirst1[i] = count;
+							}else if(value ==1 && rxInSecond1[i]==0) {
+								rxInSecond1[i] = count;
+							}
+						}
 					}
 					String[] destinations = module.destinations;
 					Integer output = module.getPulse(trip.getValue1(), trip.getValue2());
@@ -166,15 +155,18 @@ public class Day20 {
 				}
 			}
 			
-			if((rdLoop>0 && !rdCounting) && (btLoop>0 && !btCounting) && (fvLoop>0 && !fvCounting) && (prLoop>0 && !prCounting)) {
-				doRun = false;
+			doRun = false;
+			for(int i = 0; i<rxInSecond1.length; i++) {
+				if(rxInSecond1[i] == 0) {
+					doRun = true;
+				}
 			}
 		}
+		
 		List<Long> loops = new ArrayList<Long>();
-		loops.add((long) rdLoop);
-		loops.add((long) btLoop);
-		loops.add((long) fvLoop);
-		loops.add((long) prLoop);
+		for (int i = 0; i<rxInFirst1.length; i++) {
+			loops.add((long)(rxInSecond1[i] - rxInFirst1[i]));
+		}
 		
 		return Maths.lcm(loops);
 	}	
