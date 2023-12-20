@@ -24,13 +24,6 @@ public class AppTest
     	Day20 day20 = new Day20("givenTest2.txt");
     	assertEquals(11687500, day20.puzzle1());
     }
-    
-
-    @Test
-    public void test2Example()
-    {
-    	Day20 day20 = new Day20("givenTest.txt");
-    	assertEquals(0, day20.puzzle2());
-    }
+   
     
 }
