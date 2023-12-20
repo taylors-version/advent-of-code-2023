@@ -20,7 +20,7 @@ public class Day20 {
 	
 	List<String> lines;
 	Map<String, Module> modules;
-	Module rxInput = null;
+	Module rxInput = null; //Module which inputs into the final state
 	
 	public Day20(String fileName) {
 		lines = Util.readFile(getClass(), fileName);
@@ -104,6 +104,7 @@ public class Day20 {
 	public long puzzle2() {
 		boolean doRun = true;
 		String rxInputName = rxInput.name;
+		//Find all modules which provide into the penultimate module
 		List<Module> rxInProviders = new ArrayList<Module>();
 		for(Module m : modules.values()) {
 			for(String moduleName : m.destinations) {
@@ -113,6 +114,7 @@ public class Day20 {
 			}
 		}
 		
+		//For each "provider module" find how many iterations for their first and second high outputs
 		int[] rxInFirst1 = new int[rxInProviders.size()];
 		int[] rxInSecond1 = new int[rxInProviders.size()];
 		
@@ -133,17 +135,18 @@ public class Day20 {
 				Triplet<String, Integer, String> trip = queue.remove();
 				Module module = modules.get(trip.getValue0());
 				if(module != null) {
-					for(int i=0; i<rxInProviders.size(); i++) {
-						Module rxInProvider = rxInProviders.get(i);
-						if(module.name.equals(rxInProvider.name)) {
-							int value = module.getPulse(trip.getValue1(), trip.getValue2());
-							if(value == 1 && rxInFirst1[i]==0) {
-								rxInFirst1[i] = count;
-							}else if(value ==1 && rxInSecond1[i]==0) {
-								rxInSecond1[i] = count;
-							}
+					
+					//If my module is one of the "provider modules", mark the iteration of their first and second high outputs
+					if(rxInProviders.contains(module)) {
+						int pos = rxInProviders.indexOf(module);
+						int value = module.getPulse(trip.getValue1(), trip.getValue2());
+						if(value == 1 && rxInFirst1[pos]==0) {
+							rxInFirst1[pos] = count;
+						}else if(value ==1 && rxInSecond1[pos]==0) {
+							rxInSecond1[pos] = count;
 						}
 					}
+					
 					String[] destinations = module.destinations;
 					Integer output = module.getPulse(trip.getValue1(), trip.getValue2());
 					for(String destination : destinations) {
@@ -155,6 +158,7 @@ public class Day20 {
 				}
 			}
 			
+			//If all "provider modules" have hit their second high outputs, exit the loop
 			doRun = false;
 			for(int i = 0; i<rxInSecond1.length; i++) {
 				if(rxInSecond1[i] == 0) {

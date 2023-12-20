@@ -2,6 +2,7 @@ package com.ben.aoc;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Module {
 	
@@ -52,5 +53,25 @@ public class Module {
 		default:
 			return null;
 		}
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (o == null) {
+			return false;
+		}
+		if(o == this) {
+			return true;
+		}
+		if(!(o instanceof Module)) {
+			return false;
+		}
+		Module m = (Module) o;
+		return m.name.equals(name);
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(name);
 	}
 }
