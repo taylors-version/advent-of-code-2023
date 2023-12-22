@@ -36,11 +36,11 @@ public class Day22 {
 		
 		Collections.sort(bricks);
 		
+		gravity();
+		
 	}
 		
 	public long puzzle1() {		
-		
-		gravity();
 		
 		Set<Brick> removableBricks = new HashSet<Brick>();
 		removableBricks.addAll(bricks);
@@ -55,6 +55,21 @@ public class Day22 {
 	
 	public long puzzle2() {
 		long result = 0;
+		
+		for(int i = 0; i<bricks.size(); i++) {
+			Brick brick = bricks.get(i);
+			Set<Brick> supportingBricks = new HashSet<Brick>();
+			supportingBricks.add(brick);
+			
+			for(int j = i+1; j<bricks.size(); j++) {
+				Brick b = bricks.get(j);
+				if (supportingBricks.containsAll(b.supportingBricks) && b.supportingBricks.size()>0) {
+					supportingBricks.add(b);
+				}
+			}
+			result += supportingBricks.size() - 1;
+			
+		}
 		
 		return result;
 	}
@@ -74,7 +89,6 @@ public class Day22 {
 		for(int i = 1; i<bricks.size(); i++) {
 			Brick brick = bricks.get(i);
 			int lowestBase = getLowestSupportedLayer(brick);
-			System.out.println("Brick: " + brick + " lowest supported: " + lowestBase);
 			brick.fall(lowestBase + 1);
 			if(!layers.containsKey(brick.z2)) {
 				layers.put(brick.z2, brick.getPoints());
