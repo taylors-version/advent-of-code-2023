@@ -21,7 +21,7 @@ public class AppTest
     public void testExample2()
     {
     	Day24 day24 = new Day24("givenTest.txt");
-    	assertEquals(0, day24.puzzle2());
+    	assertEquals(47, day24.puzzle2());
     }
 
 }

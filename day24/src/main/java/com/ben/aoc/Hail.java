@@ -27,6 +27,7 @@ public class Hail {
 		
 		m = ((double)y2 - py) / (x2 - px);
         c = -(m * px) + py;
+        
 	}
 	
 	public Pair<Double, Double> getCollision(Hail h){
