@@ -24,6 +24,5 @@ public class AppTest
     	Day23 day23 = new Day23("givenTest.txt");
     	assertEquals(154, day23.puzzle2());
     }
-
     
 }

@@ -49,7 +49,13 @@ public class Day23 {
 	}
 		
 	public long puzzle1() {
-		return 94;
+		findEdges(true);
+		
+		for(Edge e : edges) {
+			System.out.println(e);
+		}
+		
+		return findMaxDistance();
 	}
 	
 	public long puzzle2() {
@@ -111,6 +117,7 @@ public class Day23 {
 	}
 	
 	private void findEdges(boolean ice) {
+		edges = new ArrayList<Edge>();
 		Queue<Pair<IntPoint, IntPoint>> nodeQueue = new ArrayDeque<Pair<IntPoint, IntPoint>>();
 		nodeQueue.add(new Pair<IntPoint, IntPoint>(startPoint, startPoint));
 		Set<Pair<IntPoint, IntPoint>> visitedNodes = new HashSet<Pair<IntPoint, IntPoint>>();
@@ -151,9 +158,40 @@ public class Day23 {
 			startNode = currentPoint;
 				
 			List<Pair<IntPoint, IntPoint>> nextPoints = new ArrayList<Pair<IntPoint, IntPoint>>();
-			for(Point<Integer> p : currentPoint.allNeighbours()) {
+			if(!ice) {
+				for(Point<Integer> p : currentPoint.allNeighbours()) {
+					if(isPointInGrid((IntPoint) p) && !p.equals(lastNode)) {
+						if(trail[p.getY()][p.getX()] != '#') {
+							nextPoints.add(new Pair<IntPoint, IntPoint>(startNode, (IntPoint) p));
+						}
+					}
+				}
+			}else {
+				IntPoint p = (IntPoint) currentPoint.above();
 				if(isPointInGrid((IntPoint) p) && !p.equals(lastNode)) {
-					if(trail[p.getY()][p.getX()] != '#') {
+					char c = trail[p.getY()][p.getX()];
+					if(c == '.' || c == '^') {
+						nextPoints.add(new Pair<IntPoint, IntPoint>(startNode, (IntPoint) p));
+					}
+				}
+				p = (IntPoint) currentPoint.right();
+				if(isPointInGrid((IntPoint) p) && !p.equals(lastNode)) {
+					char c = trail[p.getY()][p.getX()];
+					if(c == '.' || c == '>') {
+						nextPoints.add(new Pair<IntPoint, IntPoint>(startNode, (IntPoint) p));
+					}
+				}
+				p = (IntPoint) currentPoint.below();
+				if(isPointInGrid((IntPoint) p) && !p.equals(lastNode)) {
+					char c = trail[p.getY()][p.getX()];
+					if(c == '.' || c == 'v') {
+						nextPoints.add(new Pair<IntPoint, IntPoint>(startNode, (IntPoint) p));
+					}
+				}
+				p = (IntPoint) currentPoint.left();
+				if(isPointInGrid((IntPoint) p) && !p.equals(lastNode)) {
+					char c = trail[p.getY()][p.getX()];
+					if(c == '.' || c == '<') {
 						nextPoints.add(new Pair<IntPoint, IntPoint>(startNode, (IntPoint) p));
 					}
 				}
