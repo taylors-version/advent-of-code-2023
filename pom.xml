@@ -43,6 +43,7 @@
     <module>day22</module>
     <module>day23</module>
     <module>day24</module>
+    <module>day25</module>
   </modules>
 
   <dependencyManagement>
@@ -63,7 +64,11 @@
 		    <artifactId>javatuples</artifactId>
 		    <version>1.2</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.jgrapht</groupId>
+			<artifactId>jgrapht-core</artifactId>
+			<version>1.5.2</version>
+		</dependency>
 	  </dependencies>
   </dependencyManagement>
   
